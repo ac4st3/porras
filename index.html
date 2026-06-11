@@ -105,8 +105,14 @@
           <div class="right-actions">
             <div>
               <h2>Porra 1</h2>
-              <p class="mini">Tus equipos elegidos:</p>
+              <p class="mini">Tus equipos y apuestas elegidas:</p>
               <div class="pill-row" id="selectedTeams"></div>
+              <div class="pill-row" style="margin-top:8px">
+                <span class="pill">Pichichi: Mikel Oyarzabal</span>
+                <span class="pill">Primer goleador: Edson Álvarez</span>
+                <span class="pill">Mejor portero: Mike Maignan</span>
+                <span class="pill">Mejor jugador: Lamine Yamal</span>
+              </div>
             </div>
             <div class="controls">
               <button onclick="fetchResults()">Actualizar desde internet</button>
@@ -277,11 +283,11 @@
         "España": 0, "Francia": 0, "Portugal": 0, "Canadá": 0, "Costa de Marfil": 0, "Noruega": 0
       },
       specials: {
-        pichichiName: "",
-        firstScorerName: "",
-        bestPlayerName: "",
+        pichichiName: "Mikel Oyarzabal",
+        firstScorerName: "Edson Álvarez",
+        bestPlayerName: "Lamine Yamal",
         bestPlayerCorrect: false,
-        bestGoalkeeperName: "",
+        bestGoalkeeperName: "Mike Maignan",
         bestGoalkeeperCorrect: false
       },
       lastFetchAt: null,
