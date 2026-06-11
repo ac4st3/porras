@@ -87,14 +87,14 @@
   <header>
     <h1>Gestor de Porras Mundial</h1>
     <p class="subtitle">
-      Porra 1 con cálculo automático desde internet usando un JSON público de resultados. La Porra 2 queda preparada para añadirla después.
+      Dos porras con reglas diferentes. Los resultados de partidos se consultan desde internet y se calculan automáticamente cuando la fuente tenga los datos.
     </p>
   </header>
 
   <main>
     <nav class="tabs" aria-label="Selector de porra">
-      <button class="tab active" data-tab="porra1">Porra 1 · Automática</button>
-      <button class="tab" data-tab="porra2">Porra 2 · Pendiente</button>
+      <button class="tab active" data-tab="porra1">Porra 1 · 6 equipos</button>
+      <button class="tab" data-tab="porra2">Porra 2 · 4 equipos</button>
       <button class="tab" data-tab="rules">Reglas</button>
       <button class="tab" data-tab="config">Configuración</button>
     </nav>
@@ -106,7 +106,7 @@
             <div>
               <h2>Porra 1</h2>
               <p class="mini">Tus equipos y apuestas elegidas:</p>
-              <div class="pill-row" id="selectedTeams"></div>
+              <div class="pill-row" id="selectedTeams1"></div>
               <div class="pill-row" style="margin-top:8px">
                 <span class="pill">Pichichi: Mikel Oyarzabal</span>
                 <span class="pill">Primer goleador: Edson Álvarez</span>
@@ -120,25 +120,15 @@
             </div>
           </div>
 
-          <div id="statusAlert" class="alert info">
-            Pulsa “Actualizar desde internet” para traer partidos y resultados. Si el origen todavía no ha actualizado algún partido, ese partido no sumará.
+          <div id="statusAlert1" class="alert info">
+            Pulsa “Actualizar desde internet” para traer partidos y resultados.
           </div>
 
           <div style="overflow:auto">
-            <table id="teamsTable">
+            <table id="teamsTable1">
               <thead>
                 <tr>
-                  <th>Equipo</th>
-                  <th>Coste</th>
-                  <th>PJ</th>
-                  <th>PG</th>
-                  <th>PE</th>
-                  <th>PP</th>
-                  <th>GF</th>
-                  <th>GC</th>
-                  <th>Rondas</th>
-                  <th>Final</th>
-                  <th>Total</th>
+                  <th>Equipo</th><th>Coste</th><th>PJ</th><th>PG</th><th>PE</th><th>PP</th><th>GF</th><th>GC</th><th>Rondas</th><th>Final</th><th>Total</th>
                 </tr>
               </thead>
               <tbody></tbody>
@@ -146,35 +136,24 @@
           </div>
 
           <p class="footer-note">
-            El cálculo usa goles de tiempo reglamentario + prórroga. Si hay penaltis, el partido cuenta como empate para los puntos de partido.
-            Las tandas no suman como goles.
+            Porra 1: incluye puntos por rondas, posición final y pronósticos especiales.
           </p>
         </div>
 
         <aside class="card">
           <h3>Pronósticos especiales</h3>
-          <p class="mini">
-            El pichichi elegido y el primer goleador se pueden calcular si el JSON trae goleadores.
-            Mejor jugador y mejor portero se marcan manualmente cuando se conozcan los premios.
-          </p>
+          <p class="mini">El pichichi y primer goleador se intentan calcular si la fuente trae goleadores. Mejor jugador y mejor portero se marcan manualmente.</p>
 
           <table>
-            <thead>
-              <tr>
-                <th>Pregunta</th>
-                <th>Elección</th>
-                <th>Dato</th>
-                <th>Puntos</th>
-              </tr>
-            </thead>
+            <thead><tr><th>Pregunta</th><th>Elección</th><th>Dato</th><th>Puntos</th></tr></thead>
             <tbody id="specialsBody"></tbody>
           </table>
 
           <div class="score">
-            <div class="score-box">Equipos<strong id="teamsScore">0</strong></div>
-            <div class="score-box">Especiales<strong id="specialsScore">0</strong></div>
-            <div class="score-box">Coste<strong id="costScore">0</strong></div>
-            <div class="score-box">Total<strong id="grandTotal">0</strong></div>
+            <div class="score-box">Equipos<strong id="teamsScore1">0</strong></div>
+            <div class="score-box">Especiales<strong id="specialsScore1">0</strong></div>
+            <div class="score-box">Coste<strong id="costScore1">0</strong></div>
+            <div class="score-box">Total<strong id="grandTotal1">0</strong></div>
           </div>
 
           <div class="controls">
@@ -189,52 +168,105 @@
       </div>
 
       <div class="card" style="margin-top:18px">
-        <h3>Partidos usados para el cálculo</h3>
-        <div id="matchesUsed" class="match-list">
-          <div class="match-row">Sin datos cargados.</div>
-        </div>
+        <h3>Partidos usados para la Porra 1</h3>
+        <div id="matchesUsed1" class="match-list"><div class="match-row">Sin datos cargados.</div></div>
       </div>
     </section>
 
     <section id="porra2" class="section">
-      <div class="card">
-        <h2>Porra 2</h2>
-        <div class="empty-state">
-          <div>
-            <h3>Preparada para construir</h3>
-            <p>
-              Cuando me pases cómo funciona la segunda porra, añadimos su pestaña con sus reglas, puntuaciones,
-              participantes y cálculo propio.
-            </p>
+      <div class="grid">
+        <div class="card">
+          <div class="right-actions">
+            <div>
+              <h2>Porra 2</h2>
+              <p class="mini">Tus equipos elegidos:</p>
+              <div class="pill-row" id="selectedTeams2"></div>
+            </div>
+            <div class="controls">
+              <button onclick="fetchResults()">Actualizar desde internet</button>
+              <button class="secondary" onclick="saveData()">Guardar</button>
+            </div>
           </div>
+
+          <div id="statusAlert2" class="alert info">
+            Pulsa “Actualizar desde internet” para traer partidos y resultados.
+          </div>
+
+          <div style="overflow:auto">
+            <table id="teamsTable2">
+              <thead>
+                <tr>
+                  <th>Equipo</th><th>Coste</th><th>PJ</th><th>PG</th><th>PE</th><th>PP</th><th>GF</th><th>GC</th><th>Rojas</th><th>Total</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+
+          <p class="footer-note">
+            Porra 2: límite de 50 puntos para comprar 4 equipos. Las tarjetas rojas se pueden meter manualmente si la fuente no las trae.
+          </p>
         </div>
+
+        <aside class="card">
+          <h3>Resumen Porra 2</h3>
+          <div class="score">
+            <div class="score-box">Equipos<strong id="teamsScore2">0</strong></div>
+            <div class="score-box">Coste<strong id="costScore2">0</strong></div>
+            <div class="score-box">Límite<strong>50</strong></div>
+            <div class="score-box">Total<strong id="grandTotal2">0</strong></div>
+          </div>
+          <div class="alert info">
+            Sistema Porra 2: ganado +4, empatado +2, perdido -1, gol marcado +1, gol recibido -1, tarjeta roja -1.
+          </div>
+        </aside>
+      </div>
+
+      <div class="card" style="margin-top:18px">
+        <h3>Partidos usados para la Porra 2</h3>
+        <div id="matchesUsed2" class="match-list"><div class="match-row">Sin datos cargados.</div></div>
       </div>
     </section>
 
     <section id="rules" class="section">
-      <div class="card">
-        <h2>Reglas de la Porra 1</h2>
-        <ul class="rules">
-          <li>60 puntos máximo para comprar 6 equipos.</li>
-          <li>Partido ganado: +4.</li>
-          <li>Partido empatado: +2.</li>
-          <li>Partido perdido: -1.</li>
-          <li>Gol marcado: +1.</li>
-          <li>Gol recibido: -1.</li>
-          <li>Pasar de ronda: +4.</li>
-          <li>Campeón: +15.</li>
-          <li>Subcampeón: +8.</li>
-          <li>Tercero: +7.</li>
-          <li>Cuarto: +4.</li>
-          <li>Cada gol del pichichi elegido: +3.</li>
-          <li>Si el pichichi elegido es máximo goleador del Mundial: +6 extra.</li>
-          <li>Primer goleador del Mundial: +4.</li>
-          <li>Mejor jugador del Mundial: +6.</li>
-          <li>Mejor portero del Mundial: +6.</li>
-          <li>Los goles en prórroga sí cuentan.</li>
-          <li>Los goles en tanda de penaltis no cuentan.</li>
-          <li>Si se llega a penaltis, cuenta como empate.</li>
-        </ul>
+      <div class="grid">
+        <div class="card">
+          <h2>Reglas Porra 1</h2>
+          <ul class="rules">
+            <li>60 puntos máximo para comprar 6 equipos.</li>
+            <li>Partido ganado: +4.</li>
+            <li>Partido empatado: +2.</li>
+            <li>Partido perdido: -1.</li>
+            <li>Gol marcado: +1.</li>
+            <li>Gol recibido: -1.</li>
+            <li>Pasar de ronda: +4.</li>
+            <li>Campeón: +15.</li>
+            <li>Subcampeón: +8.</li>
+            <li>Tercero: +7.</li>
+            <li>Cuarto: +4.</li>
+            <li>Cada gol del pichichi elegido: +3.</li>
+            <li>Si el pichichi elegido es máximo goleador: +6 extra.</li>
+            <li>Primer goleador del Mundial: +4.</li>
+            <li>Mejor jugador del Mundial: +6.</li>
+            <li>Mejor portero del Mundial: +6.</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h2>Reglas Porra 2</h2>
+          <ul class="rules">
+            <li>50 puntos máximo para comprar 4 equipos.</li>
+            <li>Partido ganado: +4.</li>
+            <li>Partido empatado: +2.</li>
+            <li>Partido perdido: -1.</li>
+            <li>Gol marcado: +1.</li>
+            <li>Gol recibido: -1.</li>
+            <li>Tarjeta roja: -1.</li>
+            <li>Se incluye prórroga.</li>
+            <li>No habrá empates a partir de la primera fase, salvo que llegue a penaltis para efectos de esta porra.</li>
+            <li>Si hay tanda de penaltis, esos goles no cuentan como goles a favor.</li>
+          </ul>
+        </div>
       </div>
     </section>
 
@@ -242,7 +274,7 @@
       <div class="card">
         <h2>Configuración de datos</h2>
         <p class="mini">
-          Por defecto se consulta el JSON público de OpenFootball. No es una fuente live garantizada: puede actualizarse con retraso.
+          Por defecto se consulta el JSON público de OpenFootball. No es una fuente live garantizada.
           Si más adelante usas una API con clave, cambia la URL o adapta la función <span class="mono">normalizeMatches()</span>.
         </p>
 
@@ -257,18 +289,17 @@
         </div>
 
         <div class="alert warn">
-          Para premios oficiales como mejor jugador y mejor portero, normalmente hace falta una fuente específica o marcarlos manualmente.
-          Muchas APIs gratuitas no traen esos premios.
+          Muchas fuentes gratuitas no traen tarjetas rojas ni premios individuales. Por eso las rojas de Porra 2 y los premios de Porra 1 se pueden ajustar manualmente.
         </div>
       </div>
     </section>
   </main>
 
   <script>
-    const STORAGE_KEY = "porras_mundial_auto_v2";
+    const STORAGE_KEY = "porras_mundial_doble_v1";
     const DEFAULT_API_URL = "https://raw.githubusercontent.com/openfootball/worldcup.json/master/2026/worldcup.json";
 
-    const selectedTeams = [
+    const porra1Teams = [
       { label:"España", aliases:["España","Spain"] },
       { label:"Francia", aliases:["Francia","France"] },
       { label:"Portugal", aliases:["Portugal"] },
@@ -277,18 +308,29 @@
       { label:"Noruega", aliases:["Noruega","Norway"] }
     ];
 
+    const porra2Teams = [
+      { label:"Portugal", aliases:["Portugal"] },
+      { label:"Uruguay", aliases:["Uruguay"] },
+      { label:"Austria", aliases:["Austria"] },
+      { label:"Australia", aliases:["Australia"] }
+    ];
+
     const defaultData = {
       apiUrl: DEFAULT_API_URL,
-      costs: {
-        "España": 0, "Francia": 0, "Portugal": 0, "Canadá": 0, "Costa de Marfil": 0, "Noruega": 0
+      porra1: {
+        costs: {"España":0,"Francia":0,"Portugal":0,"Canadá":0,"Costa de Marfil":0,"Noruega":0},
+        specials: {
+          pichichiName: "Mikel Oyarzabal",
+          firstScorerName: "Edson Álvarez",
+          bestPlayerName: "Lamine Yamal",
+          bestPlayerCorrect: false,
+          bestGoalkeeperName: "Mike Maignan",
+          bestGoalkeeperCorrect: false
+        }
       },
-      specials: {
-        pichichiName: "Mikel Oyarzabal",
-        firstScorerName: "Edson Álvarez",
-        bestPlayerName: "Lamine Yamal",
-        bestPlayerCorrect: false,
-        bestGoalkeeperName: "Mike Maignan",
-        bestGoalkeeperCorrect: false
+      porra2: {
+        costs: {"Portugal":0,"Uruguay":0,"Austria":0,"Australia":0},
+        redCards: {"Portugal":0,"Uruguay":0,"Austria":0,"Australia":0}
       },
       lastFetchAt: null,
       rawMatches: []
@@ -304,13 +346,13 @@
         .normalize("NFD").replace(/[\u0300-\u036f]/g,"")
         .replace(/[’']/g,"").trim().toLowerCase();
     }
-    function sameTeam(apiName, team){
-      const n = norm(apiName);
-      return team.aliases.some(a => norm(a) === n);
+    function escapeHtml(value){
+      return String(value ?? "")
+        .replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;").replaceAll("'","&#039;");
     }
-    function getSelectedTeam(apiName){
-      return selectedTeams.find(t => sameTeam(apiName, t));
-    }
+    function sameTeam(apiName, team){ return team.aliases.some(a => norm(a) === norm(apiName)); }
+    function getSelectedTeam(apiName, teams){ return teams.find(t => sameTeam(apiName, t)); }
 
     function initTabs(){
       qsa(".tab").forEach(tab => {
@@ -324,16 +366,21 @@
     }
 
     function renderSelectedTeams(){
-      qs("#selectedTeams").innerHTML = selectedTeams.map(t => `<span class="pill">${t.label}</span>`).join("");
+      qs("#selectedTeams1").innerHTML = porra1Teams.map(t => `<span class="pill">${t.label}</span>`).join("");
+      qs("#selectedTeams2").innerHTML = porra2Teams.map(t => `<span class="pill">${t.label}</span>`).join("");
     }
 
-    function emptyStats(){
+    function emptyStats(teams, costs, redCards = null){
       const stats = {};
-      selectedTeams.forEach(t => {
+      teams.forEach(t => {
         stats[t.label] = {
-          label:t.label, cost:Number(data.costs[t.label] || 0),
+          label:t.label,
+          cost:Number(costs[t.label] || 0),
           played:0, wins:0, draws:0, losses:0,
-          goalsFor:0, goalsAgainst:0, rounds:0, finalResult:"", finalPoints:0, total:0
+          goalsFor:0, goalsAgainst:0,
+          rounds:0, finalResult:"", finalPoints:0,
+          redCards:redCards ? Number(redCards[t.label] || 0) : 0,
+          total:0
         };
       });
       return stats;
@@ -341,14 +388,16 @@
 
     function getScore(match){
       if(!match.score) return null;
-      const hasEt = match.score.et && match.score.et.length === 2;
-      const hasFt = match.score.ft && match.score.ft.length === 2;
+      const hasEt = match.score.et && match.score.et.length === 2 && match.score.et[0] !== null && match.score.et[1] !== null;
+      const hasFt = match.score.ft && match.score.ft.length === 2 && match.score.ft[0] !== null && match.score.ft[1] !== null;
       const goals = hasEt ? match.score.et : hasFt ? match.score.ft : null;
       if(!goals) return null;
       return {
         goals1:Number(goals[0]),
         goals2:Number(goals[1]),
-        penalties: match.score.p && match.score.p.length === 2 ? [Number(match.score.p[0]), Number(match.score.p[1])] : null
+        penalties: match.score.p && match.score.p.length === 2 && match.score.p[0] !== null && match.score.p[1] !== null
+          ? [Number(match.score.p[0]), Number(match.score.p[1])]
+          : null
       };
     }
 
@@ -374,25 +423,19 @@
       const r = norm(round);
       if(r.includes("final") && !r.includes("semi")) return false;
       if(r.includes("third") || r.includes("3rd") || r.includes("place")) return false;
-      return (
-        r.includes("round of") || r.includes("last 32") || r.includes("last 16") ||
-        r.includes("quarter") || r.includes("semi") || r.includes("knockout")
-      );
+      return r.includes("round of") || r.includes("last 32") || r.includes("last 16") ||
+             r.includes("quarter") || r.includes("semi") || r.includes("knockout");
     }
-
     function isFinal(round){
       const r = norm(round);
       return r === "final" || (r.includes("final") && !r.includes("semi") && !r.includes("third"));
     }
-
     function isThirdPlace(round){
       const r = norm(round);
       return r.includes("third") || r.includes("3rd") || r.includes("place");
     }
 
-    function goalMinute(goal){
-      return Number(goal.minute || 0) + Number(goal.offset || 0) / 100;
-    }
+    function goalMinute(goal){ return Number(goal.minute || 0) + Number(goal.offset || 0) / 100; }
 
     function collectGoals(matches){
       const goals = [];
@@ -415,16 +458,16 @@
       return goals.filter(g => g.scorer);
     }
 
-    function calculateFromMatches(matches){
-      const stats = emptyStats();
+    function calculatePorra1(matches){
+      const stats = emptyStats(porra1Teams, data.porra1.costs);
       const usedMatches = [];
 
       matches.forEach(match => {
         const score = getScore(match);
         if(!score) return;
 
-        const t1 = getSelectedTeam(match.team1);
-        const t2 = getSelectedTeam(match.team2);
+        const t1 = getSelectedTeam(match.team1, porra1Teams);
+        const t2 = getSelectedTeam(match.team2, porra1Teams);
         const winner = winnerByMatch(match, score);
         const loser = loserByMatch(match, score);
 
@@ -437,50 +480,27 @@
           s.goalsFor += gf;
           s.goalsAgainst += ga;
 
-          if(score.penalties || gf === ga){
-            s.draws += 1;
-          } else if((isHome && gf > ga) || (!isHome && gf > ga)){
-            s.wins += 1;
-          } else {
-            s.losses += 1;
-          }
+          if(score.penalties || gf === ga) s.draws += 1;
+          else if(gf > ga) s.wins += 1;
+          else s.losses += 1;
 
-          const wonThisMatch = winner && sameTeam(winner, teamObj);
-          if(wonThisMatch && isKnockoutProgressRound(match.round || "")) s.rounds += 1;
+          if(winner && sameTeam(winner, teamObj) && isKnockoutProgressRound(match.round || "")) s.rounds += 1;
 
           if(isFinal(match.round || "")){
-            if(winner && sameTeam(winner, teamObj)){
-              s.finalResult = "Campeón";
-              s.finalPoints = 15;
-            } else if(loser && sameTeam(loser, teamObj)){
-              s.finalResult = "Subcampeón";
-              s.finalPoints = 8;
-            }
+            if(winner && sameTeam(winner, teamObj)){ s.finalResult = "Campeón"; s.finalPoints = 15; }
+            else if(loser && sameTeam(loser, teamObj)){ s.finalResult = "Subcampeón"; s.finalPoints = 8; }
           }
 
           if(isThirdPlace(match.round || "")){
-            if(winner && sameTeam(winner, teamObj)){
-              s.finalResult = "Tercero";
-              s.finalPoints = 7;
-            } else if(loser && sameTeam(loser, teamObj)){
-              s.finalResult = "Cuarto";
-              s.finalPoints = 4;
-            }
+            if(winner && sameTeam(winner, teamObj)){ s.finalResult = "Tercero"; s.finalPoints = 7; }
+            else if(loser && sameTeam(loser, teamObj)){ s.finalResult = "Cuarto"; s.finalPoints = 4; }
           }
         }
 
         apply(t1, true);
         apply(t2, false);
 
-        if(t1 || t2){
-          usedMatches.push({
-            round:match.round || "",
-            date:match.date || "",
-            team1:match.team1,
-            team2:match.team2,
-            score:`${score.goals1}-${score.goals2}${score.penalties ? " pen. " + score.penalties[0] + "-" + score.penalties[1] : ""}`
-          });
-        }
+        if(t1 || t2) usedMatches.push(matchSummary(match, score));
       });
 
       Object.values(stats).forEach(s => {
@@ -490,12 +510,9 @@
 
       const goals = collectGoals(matches);
       const scorerGoals = {};
-      goals.forEach(g => {
-        const key = norm(g.scorer);
-        scorerGoals[key] = (scorerGoals[key] || 0) + 1;
-      });
+      goals.forEach(g => { scorerGoals[norm(g.scorer)] = (scorerGoals[norm(g.scorer)] || 0) + 1; });
 
-      const pichichiName = data.specials.pichichiName;
+      const pichichiName = data.porra1.specials.pichichiName;
       const pichichiGoals = pichichiName ? (scorerGoals[norm(pichichiName)] || 0) : 0;
       const maxGoals = Math.max(0, ...Object.values(scorerGoals));
       const pichichiIsTop = pichichiName && pichichiGoals > 0 && pichichiGoals === maxGoals;
@@ -508,7 +525,7 @@
         return a.minute - b.minute;
       });
       const firstGoal = sortedGoals[0] || null;
-      const firstScorerCorrect = firstGoal && data.specials.firstScorerName && norm(firstGoal.scorer) === norm(data.specials.firstScorerName);
+      const firstScorerCorrect = firstGoal && data.porra1.specials.firstScorerName && norm(firstGoal.scorer) === norm(data.porra1.specials.firstScorerName);
 
       const specials = {
         pichichiGoals,
@@ -516,92 +533,182 @@
         pichichiTopExtra: pichichiIsTop ? 6 : 0,
         firstGoal,
         firstScorerPoints: firstScorerCorrect ? 4 : 0,
-        bestPlayerPoints: data.specials.bestPlayerCorrect ? 6 : 0,
-        bestGoalkeeperPoints: data.specials.bestGoalkeeperCorrect ? 6 : 0
+        bestPlayerPoints: data.porra1.specials.bestPlayerCorrect ? 6 : 0,
+        bestGoalkeeperPoints: data.porra1.specials.bestGoalkeeperCorrect ? 6 : 0
       };
       specials.total = specials.pichichiPoints + specials.pichichiTopExtra + specials.firstScorerPoints + specials.bestPlayerPoints + specials.bestGoalkeeperPoints;
 
-      return { stats, usedMatches, goals, specials };
+      return { stats, usedMatches, specials };
     }
 
-    function renderTeams(){
-      const rows = selectedTeams.map(t => {
-        const s = computed?.stats?.[t.label] || emptyStats()[t.label];
-        return `
-          <tr>
-            <td><strong>${t.label}</strong></td>
-            <td><input type="number" min="0" data-cost-team="${t.label}" value="${data.costs[t.label] || 0}"></td>
-            <td>${s.played}</td>
-            <td>${s.wins}</td>
-            <td>${s.draws}</td>
-            <td>${s.losses}</td>
-            <td>${s.goalsFor}</td>
-            <td>${s.goalsAgainst}</td>
-            <td>${s.rounds}</td>
-            <td>${s.finalResult || "-"}</td>
-            <td><strong>${s.total}</strong></td>
-          </tr>
-        `;
-      }).join("");
-      qs("#teamsTable tbody").innerHTML = rows;
-      qsa("[data-cost-team]").forEach(input => {
-        input.addEventListener("input", () => {
-          data.costs[input.dataset.costTeam] = Number(input.value || 0);
-          calculate();
-        });
+    function calculatePorra2(matches){
+      const stats = emptyStats(porra2Teams, data.porra2.costs, data.porra2.redCards);
+      const usedMatches = [];
+
+      matches.forEach(match => {
+        const score = getScore(match);
+        if(!score) return;
+
+        const t1 = getSelectedTeam(match.team1, porra2Teams);
+        const t2 = getSelectedTeam(match.team2, porra2Teams);
+
+        function apply(teamObj, isHome){
+          if(!teamObj) return;
+          const s = stats[teamObj.label];
+          const gf = isHome ? score.goals1 : score.goals2;
+          const ga = isHome ? score.goals2 : score.goals1;
+          s.played += 1;
+          s.goalsFor += gf;
+          s.goalsAgainst += ga;
+
+          if(score.penalties || gf === ga) s.draws += 1;
+          else if(gf > ga) s.wins += 1;
+          else s.losses += 1;
+        }
+
+        apply(t1, true);
+        apply(t2, false);
+
+        if(t1 || t2) usedMatches.push(matchSummary(match, score));
       });
+
+      Object.values(stats).forEach(s => {
+        s.total = (s.wins * 4) + (s.draws * 2) + (s.losses * -1) +
+                  s.goalsFor - s.goalsAgainst - s.redCards;
+      });
+
+      return { stats, usedMatches };
+    }
+
+    function matchSummary(match, score){
+      return {
+        round:match.round || "",
+        date:match.date || "",
+        team1:match.team1,
+        team2:match.team2,
+        score:`${score.goals1}-${score.goals2}${score.penalties ? " pen. " + score.penalties[0] + "-" + score.penalties[1] : ""}`
+      };
+    }
+
+    function calculate(){
+      readInputs();
+      computed = {
+        porra1: calculatePorra1(data.rawMatches || []),
+        porra2: calculatePorra2(data.rawMatches || [])
+      };
+      renderAll();
+      saveData(false);
+    }
+
+    function renderAll(){
+      renderTeams1();
+      renderSpecials();
+      renderMatches("matchesUsed1", computed?.porra1?.usedMatches || []);
+      renderTeams2();
+      renderMatches("matchesUsed2", computed?.porra2?.usedMatches || []);
+      renderSummary();
+    }
+
+    function renderTeams1(){
+      const stats = computed?.porra1?.stats || emptyStats(porra1Teams, data.porra1.costs);
+      qs("#teamsTable1 tbody").innerHTML = porra1Teams.map(t => {
+        const s = stats[t.label];
+        return `<tr>
+          <td><strong>${t.label}</strong></td>
+          <td><input type="number" min="0" data-p="1" data-cost-team="${t.label}" value="${data.porra1.costs[t.label] || 0}"></td>
+          <td>${s.played}</td><td>${s.wins}</td><td>${s.draws}</td><td>${s.losses}</td><td>${s.goalsFor}</td><td>${s.goalsAgainst}</td>
+          <td>${s.rounds}</td><td>${s.finalResult || "-"}</td><td><strong>${s.total}</strong></td>
+        </tr>`;
+      }).join("");
+      bindInputs();
+    }
+
+    function renderTeams2(){
+      const stats = computed?.porra2?.stats || emptyStats(porra2Teams, data.porra2.costs, data.porra2.redCards);
+      qs("#teamsTable2 tbody").innerHTML = porra2Teams.map(t => {
+        const s = stats[t.label];
+        return `<tr>
+          <td><strong>${t.label}</strong></td>
+          <td><input type="number" min="0" data-p="2" data-cost-team="${t.label}" value="${data.porra2.costs[t.label] || 0}"></td>
+          <td>${s.played}</td><td>${s.wins}</td><td>${s.draws}</td><td>${s.losses}</td><td>${s.goalsFor}</td><td>${s.goalsAgainst}</td>
+          <td><input type="number" min="0" data-red-team="${t.label}" value="${data.porra2.redCards[t.label] || 0}"></td>
+          <td><strong>${s.total}</strong></td>
+        </tr>`;
+      }).join("");
+      bindInputs();
     }
 
     function renderSpecials(){
-      const sp = computed?.specials || {};
+      const sp = computed?.porra1?.specials || {};
       qs("#specialsBody").innerHTML = `
         <tr>
           <td><strong>Pichichi elegido</strong><div class="mini">3 puntos por cada gol. +6 si acaba máximo goleador.</div></td>
-          <td><input id="pichichiName" type="text" placeholder="Ej: Mbappé" value="${escapeHtml(data.specials.pichichiName)}"></td>
+          <td><input id="pichichiName" type="text" placeholder="Ej: Mbappé" value="${escapeHtml(data.porra1.specials.pichichiName)}"></td>
           <td>${sp.pichichiGoals ?? 0} goles ${sp.pichichiTopExtra ? "+ extra" : ""}</td>
           <td><strong>${(sp.pichichiPoints || 0) + (sp.pichichiTopExtra || 0)}</strong></td>
         </tr>
         <tr>
           <td><strong>Primer goleador del Mundial</strong><div class="mini">4 puntos.</div></td>
-          <td><input id="firstScorerName" type="text" placeholder="Nombre" value="${escapeHtml(data.specials.firstScorerName)}"></td>
+          <td><input id="firstScorerName" type="text" placeholder="Nombre" value="${escapeHtml(data.porra1.specials.firstScorerName)}"></td>
           <td>${sp.firstGoal ? escapeHtml(sp.firstGoal.scorer + " · " + sp.firstGoal.match) : "-"}</td>
           <td><strong>${sp.firstScorerPoints || 0}</strong></td>
         </tr>
         <tr>
           <td><strong>Mejor jugador del Mundial</strong><div class="mini">Marcar manualmente al final.</div></td>
-          <td><input id="bestPlayerName" type="text" placeholder="Nombre" value="${escapeHtml(data.specials.bestPlayerName)}"></td>
-          <td><input id="bestPlayerCorrect" type="checkbox" ${data.specials.bestPlayerCorrect ? "checked" : ""}></td>
+          <td><input id="bestPlayerName" type="text" placeholder="Nombre" value="${escapeHtml(data.porra1.specials.bestPlayerName)}"></td>
+          <td><input id="bestPlayerCorrect" type="checkbox" ${data.porra1.specials.bestPlayerCorrect ? "checked" : ""}></td>
           <td><strong>${sp.bestPlayerPoints || 0}</strong></td>
         </tr>
         <tr>
           <td><strong>Mejor portero del Mundial</strong><div class="mini">Marcar manualmente al final.</div></td>
-          <td><input id="bestGoalkeeperName" type="text" placeholder="Nombre" value="${escapeHtml(data.specials.bestGoalkeeperName)}"></td>
-          <td><input id="bestGoalkeeperCorrect" type="checkbox" ${data.specials.bestGoalkeeperCorrect ? "checked" : ""}></td>
+          <td><input id="bestGoalkeeperName" type="text" placeholder="Nombre" value="${escapeHtml(data.porra1.specials.bestGoalkeeperName)}"></td>
+          <td><input id="bestGoalkeeperCorrect" type="checkbox" ${data.porra1.specials.bestGoalkeeperCorrect ? "checked" : ""}></td>
           <td><strong>${sp.bestGoalkeeperPoints || 0}</strong></td>
         </tr>
       `;
+      bindSpecialInputs();
+    }
 
-      ["pichichiName","firstScorerName","bestPlayerName","bestGoalkeeperName"].forEach(id => {
-        qs("#" + id).addEventListener("input", e => {
-          data.specials[id] = e.target.value;
+    function bindInputs(){
+      qsa("[data-cost-team]").forEach(input => {
+        input.oninput = () => {
+          if(input.dataset.p === "1") data.porra1.costs[input.dataset.costTeam] = Number(input.value || 0);
+          if(input.dataset.p === "2") data.porra2.costs[input.dataset.costTeam] = Number(input.value || 0);
           calculate();
-        });
+        };
       });
-      ["bestPlayerCorrect","bestGoalkeeperCorrect"].forEach(id => {
-        qs("#" + id).addEventListener("change", e => {
-          data.specials[id] = e.target.checked;
+      qsa("[data-red-team]").forEach(input => {
+        input.oninput = () => {
+          data.porra2.redCards[input.dataset.redTeam] = Number(input.value || 0);
           calculate();
-        });
+        };
       });
     }
 
-    function renderMatches(){
-      const list = computed?.usedMatches || [];
+    function bindSpecialInputs(){
+      const map = {
+        pichichiName:"pichichiName",
+        firstScorerName:"firstScorerName",
+        bestPlayerName:"bestPlayerName",
+        bestGoalkeeperName:"bestGoalkeeperName"
+      };
+      Object.keys(map).forEach(id => {
+        const el = qs("#" + id);
+        if(el) el.oninput = e => { data.porra1.specials[map[id]] = e.target.value; calculate(); };
+      });
+      ["bestPlayerCorrect","bestGoalkeeperCorrect"].forEach(id => {
+        const el = qs("#" + id);
+        if(el) el.onchange = e => { data.porra1.specials[id] = e.target.checked; calculate(); };
+      });
+    }
+
+    function renderMatches(id, list){
+      const target = qs("#" + id);
       if(!list.length){
-        qs("#matchesUsed").innerHTML = `<div class="match-row">No hay partidos finalizados de tus equipos en los datos cargados.</div>`;
+        target.innerHTML = `<div class="match-row">No hay partidos finalizados de tus equipos en los datos cargados.</div>`;
         return;
       }
-      qs("#matchesUsed").innerHTML = list.map(m => `
+      target.innerHTML = list.map(m => `
         <div class="match-row">
           <span class="small-badge">${escapeHtml(m.date)}</span>
           <span class="small-badge">${escapeHtml(m.round)}</span>
@@ -611,24 +718,24 @@
     }
 
     function renderSummary(){
-      const teamsTotal = Object.values(computed?.stats || {}).reduce((acc,s) => acc + s.total, 0);
-      const specialsTotal = computed?.specials?.total || 0;
-      const costTotal = Object.values(data.costs).reduce((a,b) => a + Number(b || 0), 0);
+      const teamsTotal1 = Object.values(computed?.porra1?.stats || {}).reduce((acc,s) => acc + s.total, 0);
+      const specialsTotal1 = computed?.porra1?.specials?.total || 0;
+      const costTotal1 = Object.values(data.porra1.costs).reduce((a,b) => a + Number(b || 0), 0);
+      qs("#teamsScore1").textContent = teamsTotal1;
+      qs("#specialsScore1").textContent = specialsTotal1;
+      qs("#costScore1").textContent = costTotal1;
+      qs("#grandTotal1").textContent = teamsTotal1 + specialsTotal1;
 
-      qs("#teamsScore").textContent = teamsTotal;
-      qs("#specialsScore").textContent = specialsTotal;
-      qs("#costScore").textContent = costTotal;
-      qs("#grandTotal").textContent = teamsTotal + specialsTotal;
+      const teamsTotal2 = Object.values(computed?.porra2?.stats || {}).reduce((acc,s) => acc + s.total, 0);
+      const costTotal2 = Object.values(data.porra2.costs).reduce((a,b) => a + Number(b || 0), 0);
+      qs("#teamsScore2").textContent = teamsTotal2;
+      qs("#costScore2").textContent = costTotal2;
+      qs("#grandTotal2").textContent = teamsTotal2;
 
-      if(costTotal === 0){
-        setStatus("info", "Costes sin rellenar. Puedes poner el coste de cada equipo para validar el límite de 60.");
-      } else if(costTotal <= 60){
-        setStatus("ok", `Selección válida: los 6 equipos suman ${costTotal}/60 puntos.`);
-      } else {
-        setStatus("warn", `Ojo: los 6 equipos suman ${costTotal}/60 puntos. Supera el límite de 60.`);
-      }
+      setBudgetStatus("statusAlert1", costTotal1, 60, "Porra 1");
+      setBudgetStatus("statusAlert2", costTotal2, 50, "Porra 2");
 
-      const sp = computed?.specials;
+      const sp = computed?.porra1?.specials;
       if(sp){
         qs("#specialSummary").className = "alert info";
         qs("#specialSummary").innerHTML =
@@ -637,36 +744,34 @@
       }
     }
 
-    function calculate(){
-      readInputs();
-      computed = calculateFromMatches(data.rawMatches || []);
-      renderTeams();
-      renderSpecials();
-      renderMatches();
-      renderSummary();
-      saveData(false);
+    function setBudgetStatus(id, cost, limit, label){
+      const el = qs("#" + id);
+      if(cost === 0){
+        el.className = "alert info";
+        el.textContent = `${label}: costes sin rellenar. Puedes poner el coste de cada equipo para validar el límite de ${limit}.`;
+      } else if(cost <= limit){
+        el.className = "alert ok";
+        el.textContent = `${label}: selección válida. Suma ${cost}/${limit} puntos.`;
+      } else {
+        el.className = "alert warn";
+        el.textContent = `${label}: ojo, suma ${cost}/${limit} puntos y supera el límite.`;
+      }
     }
 
     async function fetchResults(){
       readInputs();
-      const url = (data.apiUrl || DEFAULT_API_URL).trim();
-      setStatus("info", "Consultando resultados en internet...");
+      setStatusBoth("info", "Consultando resultados en internet...");
       try{
+        const url = (data.apiUrl || DEFAULT_API_URL).trim();
         const response = await fetch(url + (url.includes("?") ? "&" : "?") + "t=" + Date.now(), { cache:"no-store" });
         if(!response.ok) throw new Error("HTTP " + response.status);
         const json = await response.json();
-        const matches = normalizeMatches(json);
-        data.rawMatches = matches;
+        data.rawMatches = normalizeMatches(json);
         data.lastFetchAt = new Date().toISOString();
-        computed = calculateFromMatches(matches);
-        renderTeams();
-        renderSpecials();
-        renderMatches();
-        renderSummary();
-        saveData(false);
-        setStatus("ok", `Datos actualizados. Partidos encontrados en el origen: ${matches.length}. Última actualización local: ${new Date(data.lastFetchAt).toLocaleString()}.`);
+        calculate();
+        setStatusBoth("ok", `Datos actualizados. Partidos encontrados en el origen: ${data.rawMatches.length}. Última actualización local: ${new Date(data.lastFetchAt).toLocaleString()}.`);
       } catch(err){
-        setStatus("warn", "No se han podido cargar los datos desde internet. Revisa la URL, CORS o el formato del JSON. Error: " + err.message);
+        setStatusBoth("warn", "No se han podido cargar los datos desde internet. Revisa la URL, CORS o el formato del JSON. Error: " + err.message);
       }
     }
 
@@ -699,65 +804,68 @@
       if(api) data.apiUrl = api.value || DEFAULT_API_URL;
 
       qsa("[data-cost-team]").forEach(input => {
-        data.costs[input.dataset.costTeam] = Number(input.value || 0);
+        if(input.dataset.p === "1") data.porra1.costs[input.dataset.costTeam] = Number(input.value || 0);
+        if(input.dataset.p === "2") data.porra2.costs[input.dataset.costTeam] = Number(input.value || 0);
+      });
+      qsa("[data-red-team]").forEach(input => {
+        data.porra2.redCards[input.dataset.redTeam] = Number(input.value || 0);
       });
 
-      const p = qs("#pichichiName"); if(p) data.specials.pichichiName = p.value;
-      const f = qs("#firstScorerName"); if(f) data.specials.firstScorerName = f.value;
-      const bp = qs("#bestPlayerName"); if(bp) data.specials.bestPlayerName = bp.value;
-      const bg = qs("#bestGoalkeeperName"); if(bg) data.specials.bestGoalkeeperName = bg.value;
-      const bpc = qs("#bestPlayerCorrect"); if(bpc) data.specials.bestPlayerCorrect = bpc.checked;
-      const bgc = qs("#bestGoalkeeperCorrect"); if(bgc) data.specials.bestGoalkeeperCorrect = bgc.checked;
+      const p = qs("#pichichiName"); if(p) data.porra1.specials.pichichiName = p.value;
+      const f = qs("#firstScorerName"); if(f) data.porra1.specials.firstScorerName = f.value;
+      const bp = qs("#bestPlayerName"); if(bp) data.porra1.specials.bestPlayerName = bp.value;
+      const bg = qs("#bestGoalkeeperName"); if(bg) data.porra1.specials.bestGoalkeeperName = bg.value;
+      const bpc = qs("#bestPlayerCorrect"); if(bpc) data.porra1.specials.bestPlayerCorrect = bpc.checked;
+      const bgc = qs("#bestGoalkeeperCorrect"); if(bgc) data.porra1.specials.bestGoalkeeperCorrect = bgc.checked;
     }
 
-    function setStatus(type, msg){
-      const alert = qs("#statusAlert");
-      alert.className = "alert " + type;
-      alert.textContent = msg;
+    function setStatusBoth(type, msg){
+      ["statusAlert1","statusAlert2"].forEach(id => {
+        const el = qs("#" + id);
+        el.className = "alert " + type;
+        el.textContent = msg;
+      });
     }
 
     function saveData(showMessage = true){
       localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-      if(showMessage) setStatus("ok", "Datos guardados en este navegador.");
+      if(showMessage) setStatusBoth("ok", "Datos guardados en este navegador.");
     }
 
     function loadData(){
       const saved = localStorage.getItem(STORAGE_KEY);
-      data = saved ? JSON.parse(saved) : structuredClone(defaultData);
+      data = saved ? mergeDefaults(JSON.parse(saved), structuredClone(defaultData)) : structuredClone(defaultData);
       qs("#apiUrl").value = data.apiUrl || DEFAULT_API_URL;
-      computed = calculateFromMatches(data.rawMatches || []);
-      renderTeams();
-      renderSpecials();
-      renderMatches();
-      renderSummary();
+      computed = {
+        porra1: calculatePorra1(data.rawMatches || []),
+        porra2: calculatePorra2(data.rawMatches || [])
+      };
+      renderAll();
+    }
+
+    function mergeDefaults(saved, defaults){
+      return {
+        ...defaults,
+        ...saved,
+        porra1:{...defaults.porra1, ...(saved.porra1 || {}), costs:{...defaults.porra1.costs, ...((saved.porra1 || {}).costs || {})}, specials:{...defaults.porra1.specials, ...((saved.porra1 || {}).specials || {})}},
+        porra2:{...defaults.porra2, ...(saved.porra2 || {}), costs:{...defaults.porra2.costs, ...((saved.porra2 || {}).costs || {})}, redCards:{...defaults.porra2.redCards, ...((saved.porra2 || {}).redCards || {})}}
+      };
     }
 
     function resetData(){
-      if(!confirm("¿Seguro que quieres resetear la Porra 1?")) return;
+      if(!confirm("¿Seguro que quieres resetear las porras?")) return;
       localStorage.removeItem(STORAGE_KEY);
       data = structuredClone(defaultData);
       qs("#apiUrl").value = DEFAULT_API_URL;
-      computed = calculateFromMatches([]);
-      renderTeams();
-      renderSpecials();
-      renderMatches();
-      renderSummary();
-      setStatus("info", "Datos reseteados.");
+      computed = { porra1: calculatePorra1([]), porra2: calculatePorra2([]) };
+      renderAll();
+      setStatusBoth("info", "Datos reseteados.");
     }
 
     function restoreDefaultUrl(){
       qs("#apiUrl").value = DEFAULT_API_URL;
       data.apiUrl = DEFAULT_API_URL;
       saveData();
-    }
-
-    function escapeHtml(value){
-      return String(value ?? "")
-        .replaceAll("&","&amp;")
-        .replaceAll("<","&lt;")
-        .replaceAll(">","&gt;")
-        .replaceAll('"',"&quot;")
-        .replaceAll("'","&#039;");
     }
 
     initTabs();
